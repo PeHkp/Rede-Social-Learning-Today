@@ -1,11 +1,26 @@
 import express from "express";
+import multer from "multer";
+import uploadConfig from './config/multer';
 
-import Exemplo from "./controllers/ControllerExemplo"
+// System Routes
+import ControllerUser from "./controllers/ControllerUser";
+
+// Validation Routes
+import ValidationEmail from "./validation/validationEmail";
 
 const routes = express.Router();
+const upload = multer(uploadConfig);
 
-const exemplo = new Exemplo()
+// System Objects Routes
+const UserController = new ControllerUser();
 
-routes.get("/exemplo",exemplo.index)
+// Validation Objects Routes
+const EmailValidator = new ValidationEmail();
+
+// System
+routes.post("/user/cadastro",upload.single("perfil_image"), UserController.userCadastro);
+
+// Validation
+routes.post('/validation/is-register-email', EmailValidator.isRegisterEmail);
 
 export default routes;
