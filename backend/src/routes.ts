@@ -4,6 +4,7 @@ import uploadConfig from './config/multer';
 
 // System Routes
 import ControllerUser from "./controllers/ControllerUser";
+import ControllerPost from "./controllers/ControllerPost";
 
 // Validation Routes
 import ValidationEmail from "./validation/validationEmail";
@@ -14,6 +15,7 @@ const upload = multer(uploadConfig);
 
 // System Objects Routes
 const UserController = new ControllerUser();
+const PostController = new ControllerPost()
 
 // Validation Objects Routes
 const EmailValidator = new ValidationEmail();
@@ -22,6 +24,10 @@ const TokenValidator = new TokenChallenger();
 // System
 routes.post("/user/cadastro",upload.single("perfil_image"), UserController.userCadastro);
 routes.post("/user/login", UserController.userLogin);
+
+routes.post("/post/create", upload.single("image"), PostController.create);
+routes.put("/post/edit/:id", PostController.edit);
+routes.delete("/post/delete/:id", PostController.delete);
 
 // Validation
 routes.post('/validation/is-register-email', EmailValidator.isRegisterEmail);
