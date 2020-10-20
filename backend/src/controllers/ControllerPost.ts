@@ -56,14 +56,13 @@ class ControllerPost {
           .where("id", data_user.id)
           .select("user_id")
           .first();
+        await trx.commit();
 
         if (data_user.id != data_post.user_id) {
-          return res
-            .status(401)
-            .json({
-              message: "Voce nao tem autorização para editar esse post!",
-              success: false,
-            });
+          return res.status(401).json({
+            message: "Voce nao tem autorização para editar esse post!",
+            success: false,
+          });
         }
 
         await trx("Post").where("id", id).update({ text_post });
@@ -100,14 +99,13 @@ class ControllerPost {
           .where("id", data_user.id)
           .select("user_id")
           .first();
+        await trx.commit();
 
         if (data_user.id != data_post.user_id) {
-          return res
-            .status(401)
-            .json({
-              message: "Voce nao tem autorização para deletar esse post!",
-              success: false,
-            });
+          return res.status(401).json({
+            message: "Voce nao tem autorização para deletar esse post!",
+            success: false,
+          });
         }
         await trx("Post").where("id", id).delete();
         await trx.commit();
