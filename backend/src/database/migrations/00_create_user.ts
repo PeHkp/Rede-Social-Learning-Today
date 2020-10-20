@@ -7,6 +7,7 @@ export async function up(knex: Knex) {
         table.string("perfil_image").notNullable()
         table.string("email").notNullable()
         table.string("password").notNullable()
+        table.string("token_challenger")
     })
 }
 export async function down(knex: Knex) {

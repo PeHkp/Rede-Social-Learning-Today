@@ -5,15 +5,13 @@ class ValidationEmail {
   async isRegisterEmail(req: Request, res: Response) {
     const { email } = req.body;
 
-    const trx = await knex.transaction();
-
     try {
-      const emailEncontrado = await trx("User")
+      const emailEncontrado = await knex("User")
         .where("email", email)
         .select("email");
 
       if (emailEncontrado.length >= 1) {
-        return res.status(401).json({
+        return res.status(200).json({
           message: "Email ja cadastrado!",
           isRegisterEmail: true,
         });
