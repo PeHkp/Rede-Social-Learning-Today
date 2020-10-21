@@ -15,6 +15,7 @@ class ControllerUser {
           email,
           password,
           perfil_image: `${process.env.URL_DA_HOSPEDADA}/uploads/${perfil_image}`,
+          follow: [1,2]
         });
         await trx.commit();
 

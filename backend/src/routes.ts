@@ -6,6 +6,7 @@ import uploadConfig from './config/multer';
 import ControllerUser from "./controllers/ControllerUser";
 import ControllerPost from "./controllers/ControllerPost";
 import ControllerFeed from "./controllers/ControllerFeed";
+import ControllerFollow from "./controllers/ControllerFollow";
 
 // Validation Routes
 import ValidationEmail from "./validation/validationEmail";
@@ -18,6 +19,7 @@ const upload = multer(uploadConfig);
 const UserController = new ControllerUser();
 const PostController = new ControllerPost();
 const FeedController = new ControllerFeed();
+const FollowController = new ControllerFollow();
 
 // Validation Objects Routes
 const EmailValidator = new ValidationEmail();
@@ -33,6 +35,9 @@ routes.delete("/post/delete/:id", PostController.delete);
 
 routes.put("/feed/like/:id", FeedController.like);
 routes.put("/feed/dnlike/:id", FeedController.dnlike);
+
+routes.get("/follow/:id", FollowController.follow);
+routes.get("/unfollow/:id", FollowController.unfollow);
 
 // Validation
 routes.post('/validation/is-register-email', EmailValidator.isRegisterEmail);

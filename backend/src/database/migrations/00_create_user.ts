@@ -8,6 +8,7 @@ export async function up(knex: Knex) {
         table.string("email").notNullable()
         table.string("password").notNullable()
         table.string("token_challenger")
+        table.specificType('follow', 'integer ARRAY');
     })
 }
 export async function down(knex: Knex) {
