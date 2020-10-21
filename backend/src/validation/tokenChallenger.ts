@@ -15,7 +15,7 @@ class TokenChallenger {
           .randomBytes(16)
           .toString("hex")}`;
 
-        await trx("User").update({
+        await trx("User").where("id", id).update({
           token_challenger: token,
         });
         await trx.commit();
