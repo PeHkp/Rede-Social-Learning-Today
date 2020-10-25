@@ -1,18 +1,23 @@
 import React, { useState, FormEvent } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { FiEye } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
+import Dropzone from "../components/dropZone";
 
-import "../styles/pages/login.css";
-import imagemGrande from "../assets/heroes.png";
+import "../styles/pages/cadastro.css";
+import imageLogo from "../assets/LTBranco.png";
 
 import api from "../services/api";
 import {
+  CadastroInterface,
   IsRegisterInterface,
   LoginInterface,
   tokenGenerateInterface,
 } from "../interfaces/interface";
 
-function Login() {
+function Cadastro() {
+  const [name, setName] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File>();
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -20,15 +25,32 @@ function Login() {
   async function handleLogin(e: FormEvent) {
     e.preventDefault();
 
+    const data = new FormData();
+
     if (validationFields()) {
+
+      if (password !== confirmPassword) {
+        alert("As senhas devem corresponderem!")
+        return;
+      }
+      data.append("name",name)
+      data.append("email",email)
+      data.append("password",password)
+      if (selectedFile) {
+        data.append("perfil_image",selectedFile)
+      }
       try {
         const isRegister: IsRegisterInterface = await api.post(
           "validation/is-register-email",
           { email }
         );
-        console.log(isRegister);
-        if (!isRegister.data.isRegisterEmail) {
+        if (isRegister.data.isRegisterEmail) {
           alert(isRegister.data.message);
+          return;
+        }
+        const cadastro: CadastroInterface = await api.post('user/cadastro',data)
+        if (!cadastro.data.success) {
+          alert(cadastro.data.message);
           return;
         }
         const login: LoginInterface = await api.post("user/login", {
@@ -55,7 +77,7 @@ function Login() {
 
         history.push("feed");
       } catch (error) {
-        alert("Falha ao login, tente novamente");
+        alert("Falha ao Cadastrar, tente novamente");
         return;
       }
     } else {
@@ -65,7 +87,7 @@ function Login() {
   }
 
   function validationFields() {
-    if (email && password !== "") {
+    if (name && email && password && confirmPassword && selectedFile) {
       return true;
     } else {
       return false;
@@ -73,55 +95,60 @@ function Login() {
   }
 
   return (
-    <div id="page-login">
+    <div id="page-cadastro">
       <header className="header">
         <div className="logo-header">
+          <Link to="/">
+            <FiArrowLeft size={32} color="white"/>
+          </Link>
           <h1>Learning Today</h1>
-        </div>
-        <div className="menu-header">
-          <Link to="/home" className="link-button">
-            Inicio
-          </Link>
-          <Link to="/about" className="link-button">
-            Sobre
-          </Link>
+          <img src={imageLogo} alt="Learning Today" />
         </div>
       </header>
       <div className="main">
-        <img src={imagemGrande} alt="Learning Today" />
         <form onSubmit={handleLogin}>
           <div className="inputs-body">
+          <label htmlFor="name">Nome</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Digite seu Nome"
+              className="input-cadastro"
+            />
             <label htmlFor="email">Email</label>
             <input
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Digite seu Email"
-              className="input-login"
+              className="input-cadastro"
             />
             <label htmlFor="pass">Senha</label>
-            <FiEye
-              className="eyeButton"
-              color={"#7575ca"}
-            />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Digite sua Senha"
-              className="input-login"
+              className="input-cadastro"
             />
+            <label htmlFor="passConf">Confirme a Senha</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Digite sua Senha"
+              className="input-cadastro"
+            />
+            <Dropzone onFileUploaded={setSelectedFile} />
             <button className="button-form" type="submit">
-              Entrar
+              Cadastrar
             </button>
           </div>
         </form>
-        <Link to="/cadastro" className="link-button">
-          Cadastrar-se
-        </Link>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default Cadastro;
