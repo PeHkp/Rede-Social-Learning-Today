@@ -1,21 +1,25 @@
-#page-login {
+#page-cadastro {
   width: 100vw;
   height: 100vh;
 }
-#page-login .header {
+#page-cadastro .header {
   width: 100%;
   height: 50px;
 
   background-color: #4343d0;
   padding: 10px 2rem;
-
+}
+.logo-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 }
 .logo-header h1 {
   font-size: 22px;
+}
+.logo-header img {
+  width: 30px;
+  height: 30px;
 }
 .menu-header .link-button {
   text-decoration: none;
@@ -25,32 +29,24 @@
 .menu-header .link-button:hover {
   color: #7575ca;
 }
-#page-login .main {
-  margin-top: 20px;
+#page-cadastro .main {
+  margin-top: 30px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-#page-login .main img {
+#page-cadastro .main img {
   width: 300px;
 }
-#page-login .main .inputs-body {
-  margin-top:25px;
-
+#page-cadastro .main .inputs-body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
 }
-#page-login .main .inputs-body .eyeButton {
-  cursor: pointer;
-  left: 300px;
-  top: 525px;
-  position: absolute;
-}
-.input-login {
+.input-cadastro {
   flex: 1;
   background: white;
   border-radius: 8px;
@@ -60,11 +56,11 @@
   font-size: 16px;
   color: #6c6c80;
 }
-.input-login:focus {
+.input-cadastro:focus {
   border: 1px solid #4343d0;
   outline: 0;
 }
-#page-login .main label {
+#page-cadastro .main label {
   font-size: 18px;
   font-weight: 600;
   color: #7575ca;
@@ -90,13 +86,13 @@
   border: 1px solid #7575ca;
   outline: 0;
 }
-#page-login .main .link-button {
+#page-cadastro .main .link-button {
   margin-top: 8px;
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
   color: #7575ca;
 }
-#page-login .main .link-button:hover {
+#page-cadastro .main .link-button:hover {
   color: #4343d0;
 }
