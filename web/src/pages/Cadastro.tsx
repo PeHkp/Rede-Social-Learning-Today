@@ -101,7 +101,7 @@ function Cadastro() {
           <Link to="/">
             <FiArrowLeft size={32} color="white"/>
           </Link>
-          <h1>Learning Today</h1>
+          <h1>Cadastre-se</h1>
           <img src={imageLogo} alt="Learning Today" />
         </div>
       </header>
